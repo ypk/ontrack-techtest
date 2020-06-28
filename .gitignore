@@ -1,7 +1,23 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
 # dependencies
 /node_modules
+bower_components
 /.pnp
 .pnp.js
 
@@ -12,6 +28,11 @@
 /build
 
 # misc
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
 .DS_Store
 .env.local
 .env.development.local
@@ -21,3 +42,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+*.sublime*
+
+psd
+thumb
+sketch
