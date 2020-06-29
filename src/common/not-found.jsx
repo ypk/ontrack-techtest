@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { IndexLinkContainer } from "react-router-bootstrap";
 
-import "./not-found.scss";
+import "./common.scss";
 
 function NotFound() {
   return (
@@ -14,9 +14,9 @@ function NotFound() {
           <br />
           <p>Hi Lost!. Why are you here?</p>
           <br />
-          <LinkContainer to="/">
+          <IndexLinkContainer  active={false} to="/">
             <Button variant="primary">Take me home!</Button>
-          </LinkContainer>
+          </IndexLinkContainer>
         </Col>
       </Row>
     </Container>
