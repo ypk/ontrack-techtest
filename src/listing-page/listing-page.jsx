@@ -42,23 +42,35 @@ function ListingPage () {
   }
   const handlePageNavigation = (event) => {
     const { value } = event.target
-    console.log(value)
+    setPageNumber(value)
   }
   const generatePagination = () => {
-    let pages = [];
-    if (pageNumber < 3) {
-      for (let i = 1; i <= 3; i++) {
-        pages[i] = (<Button  onClick={e => handlePageNavigation(e)} value={i} variant="primary" key={i}>{i}</Button>);
+    let pages = []
+    pages[0] = (<Button onClick={e => handlePageNavigation(e)} variant='primary' key='first' disabled={pageNumber === 1} value={1}>First</Button>)
+    if (pageNumber <= 5) {
+      for (let minLowerLimit = 1; minLowerLimit < 5; minLowerLimit++) {
+        pages[minLowerLimit] = (<Button onClick={e => handlePageNavigation(e)} variant='primary' value={minLowerLimit} key={minLowerLimit} disabled={minLowerLimit === pageNumber}>{minLowerLimit}</Button>)
       }
+      for (let minUpperLimit = pageNumber; minUpperLimit <= pageNumber + 5; minUpperLimit++) {
+        pages.push(<Button onClick={e => handlePageNavigation(e)} variant='primary' value={minUpperLimit} key={minUpperLimit} disabled={minUpperLimit === pageNumber}>{minUpperLimit}</Button>)
+      }
+      pages.push(<Button variant='primary' key='disabledLessThanFive' disabled>...</Button>)
     } else {
-      for (let j = (pageNumber - 3); j <= pageNumber; j++) {
-        pages[j] = (<Button variant="primary" onClick={e => handlePageNavigation(e)} key={j} value={j} disabled={ pageNumber === pageCount }>{j}</Button>);
+      pages.push(<Button variant='primary' key='disabledGreaterThanFive' disabled>...</Button>)
+      for (let maxLowerLimit = pageNumber - 5; maxLowerLimit <= pageNumber; maxLowerLimit++) {
+        pages[maxLowerLimit] = (<Button onClick={e => handlePageNavigation(e)} variant='primary' key={maxLowerLimit} value={maxLowerLimit} disabled={maxLowerLimit === pageNumber}>{maxLowerLimit}</Button>)
+      }
+      for (let maxUpperLimit = pageNumber + 1; maxUpperLimit <= pageNumber + 5 && maxUpperLimit <= pageCount; maxUpperLimit++) {
+        pages[maxUpperLimit] = (<Button onClick={e => handlePageNavigation(e)} variant='primary' value={maxUpperLimit} key={maxUpperLimit}>{maxUpperLimit}</Button>)
+      }
+      if (pageNumber <= pageCount - 5) {
+        pages.push(<Button variant='primary' key='disabledLastFive' disabled>...</Button>)
       }
     }
-
+    pages[pages.length + 1] = (<Button onClick={e => handlePageNavigation(e)} variant='primary' key='last' disabled={pageNumber === pageCount} value={pageCount}>Last</Button>)
     return (
-      <ButtonToolbar className="mb-3" aria-label="Page Navigation Toolbar">
-        <ButtonGroup className="mr-2" aria-label="Page Numbers">
+      <ButtonToolbar className='mb-3' aria-label='Page Navigation Toolbar'>
+        <ButtonGroup className='mr-2' aria-label='Page Numbers'>
           {
             pages.map(page => page)
           }
@@ -116,7 +128,7 @@ function ListingPage () {
         <Accordion className='my-4'>
           <Card>
             <Accordion.Toggle as={Button} eventKey='0'>
-              <span role='img' aria-label='settings' className='float-left'>⚙️&nbsp;Settings</span>
+              <span role='img' aria-label='settings' className='float-left'>⚙️&nbspSettings</span>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey='0'>
               <Row className='m-4'>
