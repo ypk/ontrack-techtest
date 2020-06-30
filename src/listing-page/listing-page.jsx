@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Accordion,
+  Alert,
   Button,
   Card,
   Col,
@@ -31,6 +32,7 @@ function ListingPage() {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [pageNumber, setPageNumber] = useState(Number.parseInt(page));
   const [queryString, setQueryString] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
   const [data, setData] = useState([]);
   const [totalPageCount, setTotalPageCount] = useState(0);
   const [calculatedPageCount, setCalculatedPageCount] = useState(0);
@@ -42,24 +44,26 @@ function ListingPage() {
   });
   const handleSelect = (event) => {
     const { value } = event.target;
-    setPageNumber(1)
     setItemsPerPage(Number.parseInt(value));
+    history.push('/books/1');
   };
   const handleQuery = () => {
     const { value } = searchElement.current;
-    setPageNumber(1)
+    setHasSearched(true)
+    setPageNumber(1);
     setQueryString(value);
   };
   const handleNavigationQuery = () => {
     const { value } = pageNavigationElement.current;
-    setPageNumber(1)
+    setPageNumber(1);
     setQueryString(value);
     handlePageNavigation({ target: { value } });
   };
   const handleSearch = (event) => {
     if (event.key === "Enter") {
       const { value } = event.target;
-      setPageNumber(1)
+      setHasSearched(true)
+      setPageNumber(1);
       setQueryString(value);
     }
   };
@@ -69,11 +73,16 @@ function ListingPage() {
   };
   const handleNavigationSearch = (event) => {
     if (event.key === "Enter") {
-      setPageNumber(1)
+      setPageNumber(1);
       setQueryString(event.target.value);
       handlePageNavigation({ target: event.target });
     }
   };
+  const resetSearch = () => {
+    setQueryString("");
+    setHasSearched(false);
+    history.push('/');
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -180,6 +189,19 @@ function ListingPage() {
                 </Accordion.Collapse>
               </Card>
             </Accordion>
+            {hasSearched && (
+              <Row>
+                <Col>
+                  <Alert
+                    variant="primary"
+                    onClose={() => resetSearch()}
+                    dismissible
+                  >
+                    Displaying {totalPageCount} search results for '{queryString}'
+                  </Alert>
+                </Col>
+              </Row>
+            )}
             <Row>
               <Col>
                 <Table responsive>

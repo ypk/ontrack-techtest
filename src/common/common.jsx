@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, ButtonGroup, ButtonToolbar, Spinner } from "react-bootstrap";
+
 import ErrorHandler from "../error-handler/error-handler.jsx";
 import RequestHandler from "../request-handler/request-handler.js";
 import NotFound from "./not-found.jsx";
@@ -32,9 +33,6 @@ const generatePagination = (
     </Button>
   );
 
-  console.log(
-    `currentPage ${currentPage},itemsPerPage ${itemsPerPage}, pagesCount ${pagesCount}, totalPages ${totalPages}`
-  );
   if (currentPage <= totalPages) {
     if (currentPage <= pagingLimit) {
       for (
@@ -73,11 +71,7 @@ const generatePagination = (
           );
         }
       } else {
-        for (
-          let muCP = currentPage + 1;
-          muCP <= totalPages;
-          muCP++
-        ) {
+        for (let muCP = currentPage + 1; muCP <= totalPages; muCP++) {
           pages.push(
             <Button
               onClick={(e) => handlePageNavigation(e)}
@@ -198,7 +192,11 @@ const generatePagination = (
       );
     }
   }
-  if (currentPage < totalPages && totalPages <= pagesCount && currentPage + 1 !== totalPages) {
+  if (
+    currentPage < totalPages &&
+    totalPages <= pagesCount &&
+    currentPage + 1 !== totalPages
+  ) {
     pages.push(
       <Button variant="primary" key="upperLimitLimitSeparator" disabled>
         ...

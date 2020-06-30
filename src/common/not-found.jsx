@@ -14,7 +14,7 @@ function NotFound() {
           <br />
           <p>Hi Lost!. Why are you here?</p>
           <br />
-          <IndexLinkContainer  active={false} to="/">
+          <IndexLinkContainer active={false} to="/">
             <Button variant="primary">Take me home!</Button>
           </IndexLinkContainer>
         </Col>
