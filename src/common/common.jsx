@@ -2,9 +2,15 @@ import React from "react";
 import { Button, ButtonGroup, ButtonToolbar, Spinner } from "react-bootstrap";
 import ErrorHandler from "../error-handler/error-handler.jsx";
 import RequestHandler from "../request-handler/request-handler.js";
-import NotFound from "./not-found.jsx"
+import NotFound from "./not-found.jsx";
 
-const generatePagination = (currentPage, totalPages, itemsPerPage, handlePageNavigation) => {
+const generatePagination = (
+  currentPage,
+  totalPages,
+  itemsPerPage,
+  handlePageNavigation,
+  pagesCount
+) => {
   const pages = [];
   const pagingLimit = 4;
 
@@ -21,202 +27,184 @@ const generatePagination = (currentPage, totalPages, itemsPerPage, handlePageNav
   );
 
   pages.push(
-    <Button variant="primary" key="251351" disabled>
+    <Button variant="primary" key="lowerLimitSeparator" disabled>
       ...
     </Button>
   );
 
-  if (currentPage <= pagingLimit) {
-    for (let minLowerLimit = currentPage; minLowerLimit >= 1; minLowerLimit--) {
-      pages[minLowerLimit] = (
-        <Button
-          onClick={(e) => handlePageNavigation(e)}
-          variant="primary"
-          value={minLowerLimit}
-          key={minLowerLimit}
-          disabled={minLowerLimit === currentPage}
-        >
-          {minLowerLimit}
-        </Button>
-      );
-    }
-    for (
-      let minUpperLimit = currentPage + 1;
-      minUpperLimit <= currentPage + pagingLimit;
-      minUpperLimit++
-    ) {
-      pages.push(
-        <Button
-          onClick={(e) => handlePageNavigation(e)}
-          variant="primary"
-          value={minUpperLimit}
-          key={minUpperLimit}
-          disabled={minUpperLimit === currentPage}
-        >
-          {minUpperLimit}
-        </Button>
-      );
-    }
-  } else if ((currentPage + pagingLimit) >= totalPages) {
-    for (
-      let maxLowerLimit = currentPage - pagingLimit;
-      maxLowerLimit <= currentPage;
-      maxLowerLimit++
-    ) {
-      pages[maxLowerLimit] = (
-        <Button
-          onClick={(e) => handlePageNavigation(e)}
-          variant="primary"
-          key={maxLowerLimit}
-          value={maxLowerLimit}
-          disabled={maxLowerLimit === currentPage}
-        >
-          {maxLowerLimit}
-        </Button>
-      );
-    }
-    for (
-      let maxUpperLimit = currentPage;
-      maxUpperLimit <= totalPages;
-      maxUpperLimit++
-    ) {
-      pages[maxUpperLimit] = (
-        <Button
-          onClick={(e) => handlePageNavigation(e)}
-          variant="primary"
-          key={maxUpperLimit}
-          value={maxUpperLimit}
-          disabled={maxUpperLimit === currentPage}
-        >
-          {maxUpperLimit}
-        </Button>
-      );
+  console.log(
+    `currentPage ${currentPage},itemsPerPage ${itemsPerPage}, pagesCount ${pagesCount}, totalPages ${totalPages}`
+  );
+  if (currentPage <= totalPages) {
+    if (currentPage <= pagingLimit) {
+      for (
+        let minLowerLimit = currentPage;
+        minLowerLimit >= 1;
+        minLowerLimit--
+      ) {
+        pages[minLowerLimit] = (
+          <Button
+            onClick={(e) => handlePageNavigation(e)}
+            variant="primary"
+            value={minLowerLimit}
+            key={minLowerLimit}
+            disabled={minLowerLimit === currentPage}
+          >
+            {minLowerLimit}
+          </Button>
+        );
+      }
+      if (totalPages > itemsPerPage) {
+        for (
+          let minUpperLimit = currentPage + 1;
+          minUpperLimit <= currentPage + pagingLimit;
+          minUpperLimit++
+        ) {
+          pages.push(
+            <Button
+              onClick={(e) => handlePageNavigation(e)}
+              variant="primary"
+              value={minUpperLimit}
+              key={minUpperLimit}
+              disabled={minUpperLimit === currentPage}
+            >
+              {minUpperLimit}
+            </Button>
+          );
+        }
+      } else {
+        for (
+          let muCP = currentPage + 1;
+          muCP <= totalPages;
+          muCP++
+        ) {
+          pages.push(
+            <Button
+              onClick={(e) => handlePageNavigation(e)}
+              variant="primary"
+              value={muCP}
+              key={muCP}
+              disabled={muCP === currentPage}
+            >
+              {muCP}
+            </Button>
+          );
+        }
+      }
+    } else if (currentPage + pagingLimit >= totalPages) {
+      for (
+        let maxLowerLimit = currentPage - pagingLimit;
+        maxLowerLimit <= currentPage;
+        maxLowerLimit++
+      ) {
+        pages[maxLowerLimit] = (
+          <Button
+            onClick={(e) => handlePageNavigation(e)}
+            variant="primary"
+            key={maxLowerLimit}
+            value={maxLowerLimit}
+            disabled={maxLowerLimit === currentPage}
+          >
+            {maxLowerLimit}
+          </Button>
+        );
+      }
+      for (
+        let maxUpperLimit = currentPage;
+        maxUpperLimit <= totalPages;
+        maxUpperLimit++
+      ) {
+        pages[maxUpperLimit] = (
+          <Button
+            onClick={(e) => handlePageNavigation(e)}
+            variant="primary"
+            key={maxUpperLimit}
+            value={maxUpperLimit}
+            disabled={maxUpperLimit === currentPage}
+          >
+            {maxUpperLimit}
+          </Button>
+        );
+      }
+    } else {
+      for (
+        let maxLowerLimitRest = currentPage - pagingLimit;
+        maxLowerLimitRest <= currentPage;
+        maxLowerLimitRest++
+      ) {
+        pages[maxLowerLimitRest] = (
+          <Button
+            onClick={(e) => handlePageNavigation(e)}
+            variant="primary"
+            key={maxLowerLimitRest}
+            value={maxLowerLimitRest}
+            disabled={maxLowerLimitRest === currentPage}
+          >
+            {maxLowerLimitRest}
+          </Button>
+        );
+      }
+      for (
+        let maxUpperLimitRest = currentPage + 1;
+        maxUpperLimitRest <= currentPage + pagingLimit;
+        maxUpperLimitRest++
+      ) {
+        pages[maxUpperLimitRest] = (
+          <Button
+            onClick={(e) => handlePageNavigation(e)}
+            variant="primary"
+            key={maxUpperLimitRest}
+            value={maxUpperLimitRest}
+            disabled={maxUpperLimitRest === currentPage}
+          >
+            {maxUpperLimitRest}
+          </Button>
+        );
+      }
     }
   } else {
     for (
-      let maxLowerLimitRest = currentPage - pagingLimit;
-      maxLowerLimitRest <= currentPage;
-      maxLowerLimitRest++
+      let minCustomLimit = currentPage;
+      minCustomLimit <= currentPage;
+      minCustomLimit++
     ) {
-      pages[maxLowerLimitRest] = (
+      pages[minCustomLimit] = (
         <Button
           onClick={(e) => handlePageNavigation(e)}
           variant="primary"
-          key={maxLowerLimitRest}
-          value={maxLowerLimitRest}
-          disabled={maxLowerLimitRest === currentPage}
+          key={minCustomLimit}
+          value={minCustomLimit}
+          disabled={minCustomLimit === currentPage}
         >
-          {maxLowerLimitRest}
+          {minCustomLimit}
         </Button>
       );
     }
     for (
-      let maxUpperLimitRest = currentPage + 1;
-      maxUpperLimitRest <= currentPage + pagingLimit;
-      maxUpperLimitRest++
+      let maxCustomLimit = currentPage;
+      maxCustomLimit <= totalPages;
+      maxCustomLimit++
     ) {
-      pages[maxUpperLimitRest] = (
+      pages[maxCustomLimit] = (
         <Button
           onClick={(e) => handlePageNavigation(e)}
           variant="primary"
-          key={maxUpperLimitRest}
-          value={maxUpperLimitRest}
-          disabled={maxUpperLimitRest === currentPage}
+          key={maxCustomLimit}
+          value={maxCustomLimit}
+          disabled={currentPage === pagesCount}
         >
-          {maxUpperLimitRest}
+          {maxCustomLimit}
         </Button>
       );
     }
   }
-  pages.push(
-    <Button variant="primary" key="disabledLessThanFive" disabled>
-      ...
-    </Button>
-  );
-
-  // if (currentPage <= 5) {
-  //   for (let minLowerLimit = 1; minLowerLimit < currentPage; minLowerLimit++) {
-  //     pages[minLowerLimit] = (
-  //       <Button
-  //         onClick={(e) => handlePageNavigation(e)}
-  //         variant="primary"
-  //         value={minLowerLimit}
-  //         key={minLowerLimit}
-  //         disabled={minLowerLimit === currentPage}
-  //       >
-  //         {minLowerLimit}
-  //       </Button>
-  //     );
-  //   }
-  //   for (
-  //     let minUpperLimit = currentPage;
-  //     minUpperLimit < currentPage + 5;
-  //     minUpperLimit++
-  //   ) {
-  //     pages.push(
-  //       <Button
-  //         onClick={(e) => handlePageNavigation(e)}
-  //         variant="primary"
-  //         value={minUpperLimit}
-  //         key={minUpperLimit}
-  //         disabled={minUpperLimit === currentPage}
-  //       >
-  //         {minUpperLimit}
-  //       </Button>
-  //     );
-  //   }
-  //   pages.push(
-  //     <Button variant="primary" key="disabledLessThanFive" disabled>
-  //       ...
-  //     </Button>
-  //   );
-  // } else {
-  //   pages.push(
-  //     <Button variant="primary" key="disabledGreaterThanFive" disabled>
-  //       ...
-  //     </Button>
-  //   );
-  //   for (
-  //     let maxLowerLimit = currentPage - 4;
-  //     maxLowerLimit <= currentPage;
-  //     maxLowerLimit++
-  //   ) {
-  //     pages[maxLowerLimit] = (
-  //       <Button
-  //         onClick={(e) => handlePageNavigation(e)}
-  //         variant="primary"
-  //         key={maxLowerLimit}
-  //         value={maxLowerLimit}
-  //         disabled={maxLowerLimit === currentPage}
-  //       >
-  //         {maxLowerLimit}
-  //       </Button>
-  //     );
-  //   }
-  //   for (
-  //     let maxUpperLimit = currentPage + 1;
-  //     maxUpperLimit < currentPage + 5 && maxUpperLimit <= totalPages;
-  //     maxUpperLimit++
-  //   ) {
-  //     pages[maxUpperLimit] = (
-  //       <Button
-  //         onClick={(e) => handlePageNavigation(e)}
-  //         variant="primary"
-  //         value={maxUpperLimit}
-  //         key={maxUpperLimit}
-  //       >
-  //         {maxUpperLimit}
-  //       </Button>
-  //     );
-  //   }
-  //   if (currentPage <= totalPages - 5) {
-  //     pages.push(
-  //       <Button variant="primary" key="disabledLastFive" disabled>
-  //         ...
-  //       </Button>
-  //     );
-  //   }
-  // }
+  if (currentPage < totalPages && totalPages <= pagesCount && currentPage + 1 !== totalPages) {
+    pages.push(
+      <Button variant="primary" key="upperLimitLimitSeparator" disabled>
+        ...
+      </Button>
+    );
+  }
   pages[pages.length + 1] = (
     <Button
       onClick={(e) => handlePageNavigation(e)}
@@ -243,8 +231,8 @@ const generatePagination = (currentPage, totalPages, itemsPerPage, handlePageNav
 const noRecordsFound = {
   isError: false,
   message: "No records match your query. Please try again",
-  reload: true
-}
+  reload: true,
+};
 
 const getBookAuthor = (author) =>
   author.length > 0 ? author.join(", ") : author.pop();
@@ -294,11 +282,17 @@ const generateTableHeader = () => {
 
 const Loader = () => {
   return (
-    <Spinner animation="border" variant="primary" className="mx-auto my-5"  size="lg" role="status">
+    <Spinner
+      animation="border"
+      variant="primary"
+      className="mx-auto my-5"
+      size="lg"
+      role="status"
+    >
       <span className="sr-only">Loading...</span>
     </Spinner>
-  )
-}
+  );
+};
 
 /**
  * @author Sterling Hamilton <sterling.hamilton@gmail.com>
@@ -337,5 +331,5 @@ export {
   renderPublicationData,
   Loader,
   NotFound,
-  noRecordsFound
+  noRecordsFound,
 };

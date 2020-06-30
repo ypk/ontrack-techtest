@@ -26,13 +26,14 @@ function ListingPage() {
   const { page } = useParams();
   const searchElement = useRef(null);
   const pageNavigationElement = useRef(null);
-  const allowedItemsCount = [5, 10, 25, 50, 100];
+  const allowedItemsCount = [1, 5, 10, 15, 20];
   const history = useHistory();
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [pageNumber, setPageNumber] = useState(Number.parseInt(page));
   const [queryString, setQueryString] = useState("");
   const [data, setData] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
+  const [totalPageCount, setTotalPageCount] = useState(0);
+  const [calculatedPageCount, setCalculatedPageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [errorObject, setErrorObject] = useState({
     isError: false,
@@ -41,19 +42,24 @@ function ListingPage() {
   });
   const handleSelect = (event) => {
     const { value } = event.target;
-    setItemsPerPage(value);
+    setPageNumber(1)
+    setItemsPerPage(Number.parseInt(value));
   };
   const handleQuery = () => {
     const { value } = searchElement.current;
+    setPageNumber(1)
     setQueryString(value);
   };
   const handleNavigationQuery = () => {
     const { value } = pageNavigationElement.current;
+    setPageNumber(1)
+    setQueryString(value);
     handlePageNavigation({ target: { value } });
   };
   const handleSearch = (event) => {
     if (event.key === "Enter") {
       const { value } = event.target;
+      setPageNumber(1)
       setQueryString(value);
     }
   };
@@ -63,6 +69,8 @@ function ListingPage() {
   };
   const handleNavigationSearch = (event) => {
     if (event.key === "Enter") {
+      setPageNumber(1)
+      setQueryString(event.target.value);
       handlePageNavigation({ target: event.target });
     }
   };
@@ -81,7 +89,8 @@ function ListingPage() {
           setData(data.books);
           const calculatedPageCount =
             Number.parseInt(data.count) / Number.parseInt(itemsPerPage);
-          setPageCount(Math.round(calculatedPageCount));
+          setTotalPageCount(Number.parseInt(data.count));
+          setCalculatedPageCount(Math.round(calculatedPageCount));
           setIsLoading(false);
         });
       } catch (e) {
@@ -124,7 +133,7 @@ function ListingPage() {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Row className="m-4">
-                    <Col sm={9}>
+                    <Col sm={10}>
                       <Form.Group controlId="searchField" className="mb-0">
                         <Form.Label>Search</Form.Label>
                         <InputGroup>
@@ -145,7 +154,7 @@ function ListingPage() {
                         </InputGroup>
                       </Form.Group>
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={2}>
                       <Form.Group
                         controlId="itemsPerPageSelect"
                         className="mb-0"
@@ -183,9 +192,10 @@ function ListingPage() {
               <Col sm={5} className="mx-auto my-3">
                 {generatePagination(
                   pageNumber,
-                  pageCount,
+                  calculatedPageCount,
                   itemsPerPage,
-                  handlePageNavigation
+                  handlePageNavigation,
+                  totalPageCount
                 )}
               </Col>
             </Row>
