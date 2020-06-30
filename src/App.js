@@ -1,7 +1,7 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import { Navbar, Container } from "react-bootstrap";
-import { Loader } from "./common/common.jsx";
-const Routes = lazy(() => import("./common/routes.jsx"));
+
+import Routes from "./common/routes.jsx";
 
 function App() {
   return (
@@ -12,9 +12,7 @@ function App() {
         </Container>
       </Navbar>
       <Container>
-        <Suspense fallback={<Loader />}>
-          <Routes></Routes>
-        </Suspense>
+      <Routes></Routes>
       </Container>
     </>
   );
