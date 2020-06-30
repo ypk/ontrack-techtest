@@ -3,65 +3,46 @@ import { Button, ButtonGroup, ButtonToolbar, Spinner } from "react-bootstrap";
 import ErrorHandler from "../error-handler/error-handler.jsx";
 import RequestHandler from "../request-handler/request-handler.js";
 import NotFound from "./not-found.jsx"
-/**
- * @author Sterling Hamilton <sterling.hamilton@gmail.com>
- */
-function isNumber(value) {
-  // We will not coerce boolean to numbers, although we could.
-  // We will not coerce strings to numbers, even though we could try.
-  // Referencing https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
-  if (typeof value !== "number") {
-    return false;
-  }
-  // Consider this as the NaN check.
-  // NaN is a number.
-  // NaN has the unique property of never equaling itself.
-  // Pulled this hack right off of MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
-  if (value !== Number(value)) {
-    return false;
-  }
-  // At this point, we for sure have some sort of number.
-  // But not all numbers are finite, and realistically we want finite numbers.
-  if (Number.isFinite(value) === false) {
-    return false;
-  }
-  // It is indeed a number
-  if (Number.isInteger(value)) {
-    return true;
-  }
-}
 
-const generatePagination = (pageNumber, pageCount, handlePageNavigation) => {
-
+const generatePagination = (currentPage, totalPages, itemsPerPage, handlePageNavigation) => {
   const pages = [];
+  const pagingLimit = 4;
+
   pages[0] = (
     <Button
       onClick={(e) => handlePageNavigation(e)}
       variant="primary"
       key="first"
-      disabled={pageNumber === 1}
+      disabled={currentPage === 1}
       value={1}
     >
       First
     </Button>
   );
-  if (pageNumber <= 5) {
-    for (let minLowerLimit = 1; minLowerLimit < pageNumber; minLowerLimit++) {
+
+  pages.push(
+    <Button variant="primary" key="251351" disabled>
+      ...
+    </Button>
+  );
+
+  if (currentPage <= pagingLimit) {
+    for (let minLowerLimit = currentPage; minLowerLimit >= 1; minLowerLimit--) {
       pages[minLowerLimit] = (
         <Button
           onClick={(e) => handlePageNavigation(e)}
           variant="primary"
           value={minLowerLimit}
           key={minLowerLimit}
-          disabled={minLowerLimit === pageNumber}
+          disabled={minLowerLimit === currentPage}
         >
           {minLowerLimit}
         </Button>
       );
     }
     for (
-      let minUpperLimit = pageNumber;
-      minUpperLimit < pageNumber + 5;
+      let minUpperLimit = currentPage + 1;
+      minUpperLimit <= currentPage + pagingLimit;
       minUpperLimit++
     ) {
       pages.push(
@@ -70,26 +51,16 @@ const generatePagination = (pageNumber, pageCount, handlePageNavigation) => {
           variant="primary"
           value={minUpperLimit}
           key={minUpperLimit}
-          disabled={minUpperLimit === pageNumber}
+          disabled={minUpperLimit === currentPage}
         >
           {minUpperLimit}
         </Button>
       );
     }
-    pages.push(
-      <Button variant="primary" key="disabledLessThanFive" disabled>
-        ...
-      </Button>
-    );
-  } else {
-    pages.push(
-      <Button variant="primary" key="disabledGreaterThanFive" disabled>
-        ...
-      </Button>
-    );
+  } else if ((currentPage + pagingLimit) >= totalPages) {
     for (
-      let maxLowerLimit = pageNumber - 4;
-      maxLowerLimit <= pageNumber;
+      let maxLowerLimit = currentPage - pagingLimit;
+      maxLowerLimit <= currentPage;
       maxLowerLimit++
     ) {
       pages[maxLowerLimit] = (
@@ -98,43 +69,161 @@ const generatePagination = (pageNumber, pageCount, handlePageNavigation) => {
           variant="primary"
           key={maxLowerLimit}
           value={maxLowerLimit}
-          disabled={maxLowerLimit === pageNumber}
+          disabled={maxLowerLimit === currentPage}
         >
           {maxLowerLimit}
         </Button>
       );
     }
     for (
-      let maxUpperLimit = pageNumber + 1;
-      maxUpperLimit < pageNumber + 5 && maxUpperLimit <= pageCount;
+      let maxUpperLimit = currentPage;
+      maxUpperLimit <= totalPages;
       maxUpperLimit++
     ) {
       pages[maxUpperLimit] = (
         <Button
           onClick={(e) => handlePageNavigation(e)}
           variant="primary"
-          value={maxUpperLimit}
           key={maxUpperLimit}
+          value={maxUpperLimit}
+          disabled={maxUpperLimit === currentPage}
         >
           {maxUpperLimit}
         </Button>
       );
     }
-    if (pageNumber <= pageCount - 5) {
-      pages.push(
-        <Button variant="primary" key="disabledLastFive" disabled>
-          ...
+  } else {
+    for (
+      let maxLowerLimitRest = currentPage - pagingLimit;
+      maxLowerLimitRest <= currentPage;
+      maxLowerLimitRest++
+    ) {
+      pages[maxLowerLimitRest] = (
+        <Button
+          onClick={(e) => handlePageNavigation(e)}
+          variant="primary"
+          key={maxLowerLimitRest}
+          value={maxLowerLimitRest}
+          disabled={maxLowerLimitRest === currentPage}
+        >
+          {maxLowerLimitRest}
+        </Button>
+      );
+    }
+    for (
+      let maxUpperLimitRest = currentPage + 1;
+      maxUpperLimitRest <= currentPage + pagingLimit;
+      maxUpperLimitRest++
+    ) {
+      pages[maxUpperLimitRest] = (
+        <Button
+          onClick={(e) => handlePageNavigation(e)}
+          variant="primary"
+          key={maxUpperLimitRest}
+          value={maxUpperLimitRest}
+          disabled={maxUpperLimitRest === currentPage}
+        >
+          {maxUpperLimitRest}
         </Button>
       );
     }
   }
+  pages.push(
+    <Button variant="primary" key="disabledLessThanFive" disabled>
+      ...
+    </Button>
+  );
+
+  // if (currentPage <= 5) {
+  //   for (let minLowerLimit = 1; minLowerLimit < currentPage; minLowerLimit++) {
+  //     pages[minLowerLimit] = (
+  //       <Button
+  //         onClick={(e) => handlePageNavigation(e)}
+  //         variant="primary"
+  //         value={minLowerLimit}
+  //         key={minLowerLimit}
+  //         disabled={minLowerLimit === currentPage}
+  //       >
+  //         {minLowerLimit}
+  //       </Button>
+  //     );
+  //   }
+  //   for (
+  //     let minUpperLimit = currentPage;
+  //     minUpperLimit < currentPage + 5;
+  //     minUpperLimit++
+  //   ) {
+  //     pages.push(
+  //       <Button
+  //         onClick={(e) => handlePageNavigation(e)}
+  //         variant="primary"
+  //         value={minUpperLimit}
+  //         key={minUpperLimit}
+  //         disabled={minUpperLimit === currentPage}
+  //       >
+  //         {minUpperLimit}
+  //       </Button>
+  //     );
+  //   }
+  //   pages.push(
+  //     <Button variant="primary" key="disabledLessThanFive" disabled>
+  //       ...
+  //     </Button>
+  //   );
+  // } else {
+  //   pages.push(
+  //     <Button variant="primary" key="disabledGreaterThanFive" disabled>
+  //       ...
+  //     </Button>
+  //   );
+  //   for (
+  //     let maxLowerLimit = currentPage - 4;
+  //     maxLowerLimit <= currentPage;
+  //     maxLowerLimit++
+  //   ) {
+  //     pages[maxLowerLimit] = (
+  //       <Button
+  //         onClick={(e) => handlePageNavigation(e)}
+  //         variant="primary"
+  //         key={maxLowerLimit}
+  //         value={maxLowerLimit}
+  //         disabled={maxLowerLimit === currentPage}
+  //       >
+  //         {maxLowerLimit}
+  //       </Button>
+  //     );
+  //   }
+  //   for (
+  //     let maxUpperLimit = currentPage + 1;
+  //     maxUpperLimit < currentPage + 5 && maxUpperLimit <= totalPages;
+  //     maxUpperLimit++
+  //   ) {
+  //     pages[maxUpperLimit] = (
+  //       <Button
+  //         onClick={(e) => handlePageNavigation(e)}
+  //         variant="primary"
+  //         value={maxUpperLimit}
+  //         key={maxUpperLimit}
+  //       >
+  //         {maxUpperLimit}
+  //       </Button>
+  //     );
+  //   }
+  //   if (currentPage <= totalPages - 5) {
+  //     pages.push(
+  //       <Button variant="primary" key="disabledLastFive" disabled>
+  //         ...
+  //       </Button>
+  //     );
+  //   }
+  // }
   pages[pages.length + 1] = (
     <Button
       onClick={(e) => handlePageNavigation(e)}
       variant="primary"
       key="last"
-      disabled={pageNumber === pageCount}
-      value={pageCount}
+      disabled={currentPage === totalPages}
+      value={totalPages}
     >
       Last
     </Button>
@@ -210,6 +299,35 @@ const Loader = () => {
     </Spinner>
   )
 }
+
+/**
+ * @author Sterling Hamilton <sterling.hamilton@gmail.com>
+ */
+function isNumber(value) {
+  // We will not coerce boolean to numbers, although we could.
+  // We will not coerce strings to numbers, even though we could try.
+  // Referencing https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
+  if (typeof value !== "number") {
+    return false;
+  }
+  // Consider this as the NaN check.
+  // NaN is a number.
+  // NaN has the unique property of never equaling itself.
+  // Pulled this hack right off of MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
+  if (value !== Number(value)) {
+    return false;
+  }
+  // At this point, we for sure have some sort of number.
+  // But not all numbers are finite, and realistically we want finite numbers.
+  if (Number.isFinite(value) === false) {
+    return false;
+  }
+  // It is indeed a number
+  if (Number.isInteger(value)) {
+    return true;
+  }
+}
+
 export {
   ErrorHandler,
   isNumber,

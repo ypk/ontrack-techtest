@@ -184,6 +184,7 @@ function ListingPage() {
                 {generatePagination(
                   pageNumber,
                   pageCount,
+                  itemsPerPage,
                   handlePageNavigation
                 )}
               </Col>
@@ -191,7 +192,7 @@ function ListingPage() {
             <Row>
               <Form.Group className="mx-auto">
                 <Form.Row className="justify-content-center">
-                  <Col sm={5} className="mr-0">
+                  <Col sm={5} className="mr-0 align-self-center">
                     <Form.Label className="mb-0">
                       Navigate Directly to:
                     </Form.Label>
