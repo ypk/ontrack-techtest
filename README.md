@@ -48,7 +48,9 @@ You can select the number of items to display on the page by selecting the `item
 
 # NOTE
 
-I assumed that instead of having blog style url `/category/post/postId` (in this case `/pageNumber/itemsPerPage/filterString`) I would limit the queries to just `pageNumber` it would give greater control to render content and would reduce code complexity. However, the logic to handle the page rendering in case of large values for `itemsPerPage` and `pageNumber` wasn't implemented to gracefully fallback to main page (in case of error), that case will be shown as a error page citing an `error in query`.
+I assumed that instead of having blog style url `/category/post/postId` (in this case `/pageNumber/itemsPerPage/filterString`) I would limit the queries to just `pageNumber` it would give greater control to render content and would reduce code complexity.
+
+However, the logic to handle the page rendering in case of large values for `itemsPerPage` and `pageNumber` wasn't implemented to gracefully fallback to main page (in case of error), that case will be shown as a error page citing an `error in query`.
 
 # Testing
 
