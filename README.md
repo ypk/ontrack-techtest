@@ -1,68 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ONTRACK
+Technical test for Ontrack
 
-## Available Scripts
+![Screenshot](https://i.imgur.com/i1r6vWD.png)
 
-In the project directory, you can run:
+This repository contains a client webapp built using create-react-app.
 
-### `yarn start`
+## Dev Instructions
+JavaScript assets are located in `src` and static assets are located in `public` folder. 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Build Instructions
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+You can use the standard create-react-app commands to serve and build the web app. In order to build the app, follow the instructions below
 
-### `yarn test`
+Ensure that you have a NodeJS environment set up along with `npm` or `yarn` installed.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Depending on what's installed, navigate to the root directory of the repository and try the following commands 
 
-### `yarn build`
+|  yarn        |   npm           |
+| ------------- |:-------------:|
+| `yarn install`     | `npm install` |
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Serve Instructions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You can serve the web app without building using webpack's dev server using the command
 
-### `yarn eject`
+|  yarn        |   npm           |
+| ------------- |:-------------:|
+| `yarn start`     | `npm start` |
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This commands will serve the app on a in-built server running on port `3000`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Or you can build the app and then host the build directory in a HTTP server of your choice.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# NOTE
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Be Advised that if you are running the code on `create-react-app`'s web server, it will spew errors in the browser console, as the page tries to load `serviceWorker.js` which is located in the `root` directory, and `react-router` would try to serve the content as `HTML` mime-type instead of `text/javascript`. 
 
-## Learn More
+If you are running the code on your own web server make sure that the server redirects all requests to `index.htmml` (read more about this here: https://www.andreasreiterer.at/fix-browserrouter-on-apache/) 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Once the server is up and running, the webapp can be accessible via the url `http://localhost:3000/`
+By default all routes on the server result in `404` except for the `/` which redirects the page to `/books/1` where `1` is the `pageNumber` for pagination.
 
-### Code Splitting
+You can select the number of items to display on the page by selecting the `itemsPerPage` dropdown on the page in `Settings` accordion. Alternatively, you can also search for a free text in the search field next to te `itemsPerPage` dropdown, which populates the filter and displays the result.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+# Testing
 
-### Analyzing the Bundle Size
+A simple test case has been written in `*.test.js`.  This project uses [Jest](https://jestjs.io/) to test the scripts
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+# PWA-Ready!
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This app is PWA ready. In order to see it in action make sure that the app is hosted on a server and you have already ran the app once. Refresh the page to see it load without API call!
