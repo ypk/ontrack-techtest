@@ -3,7 +3,7 @@ Technical test for Ontrack
 
 ![Screenshot](https://i.imgur.com/oPBedue.png)
 
-This repository contains a client webapp built using create-react-app.
+This repository contains a client webapp built using [Create React App](https://github.com/facebook/create-react-app).
 
 ## Dev Instructions
 JavaScript assets are located in `src` and static assets are located in `public` folder. 
@@ -44,7 +44,7 @@ If you are running the code on your own web server make sure that the server red
 Once the server is up and running, the webapp can be accessible via the url `http://localhost:3000/`
 By default all routes on the server result in `404` except for the `/` which redirects the page to `/books/1` where `1` is the `pageNumber` for pagination.
 
-You can select the number of items to display on the page by selecting the `itemsPerPage` dropdown on the page in `Settings` accordion. Alternatively, you can also search for a free text in the search field next to te `itemsPerPage` dropdown, which populates the filter and displays the result.
+You can select the number of items to display on the page by selecting the `itemsPerPage` dropdown on the page in `Settings` accordion. Alternatively, you can also search or filter by using free text in the search field next to te `itemsPerPage` dropdown, which populates the filter and displays the result.
 
 # NOTE
 
