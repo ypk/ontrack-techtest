@@ -1,7 +1,7 @@
 # ONTRACK
 Technical test for Ontrack
 
-![Screenshot](https://i.imgur.com/i1r6vWD.png)
+![Screenshot](https://i.imgur.com/oPBedue.png)
 
 This repository contains a client webapp built using create-react-app.
 
