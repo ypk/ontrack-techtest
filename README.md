@@ -10,7 +10,7 @@ JavaScript assets are located in `src` and static assets are located in `public`
 
 ## Build Instructions
 
-You can use the standard create-react-app commands to serve and build the web app. In order to build the app, follow the instructions below
+You can use the standard `create-react-app` commands to serve and build the web app. In order to build the app, follow the instructions below
 
 Ensure that you have a NodeJS environment set up along with `npm` or `yarn` installed.
 
@@ -23,7 +23,7 @@ Depending on what's installed, navigate to the root directory of the repository 
 
 ## Serve Instructions
 
-You can serve the web app without building using webpack's dev server using the command
+You can serve the web app without building using `create-react-app`'s dev server using the command
 
 |  yarn        |   npm           |
 | ------------- |:-------------:|
