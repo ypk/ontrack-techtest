@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap);
+
+@import "./styles/bootstrap-custom";
+@import "~bootstrap/scss/bootstrap";
+
+@import "./styles/error.scss";
+@import "./styles/not-found.scss";
+@import "./styles/loader.scss";
+@import "./styles/pagination.scss";
+@import "./styles/page-selector.scss";
+
+* {
+    font-family: 'Maven Pro', sans-serif;
+}
