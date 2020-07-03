@@ -24,7 +24,7 @@ const Loader = (props) => {
         <Spinner
           animation="border"
           variant="primary"
-          className="mx-auto my-5"
+          className="d-flex mx-auto my-5"
           size="lg"
           role="status"
         >

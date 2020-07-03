@@ -2,10 +2,8 @@ import { React, useState, useParams, useHistory, useRef } from "../common";
 import {
   PageSizeSelector,
   ListingTableContainer,
-  Pagination,
-  PageNavigation,
   SearchBar,
-  ErrorHandler
+  NotificationHandler,
 } from "../components";
 
 function BooksListing() {
@@ -14,10 +12,9 @@ function BooksListing() {
   const [pageNo, setPageNo] = useState(Number.parseInt(pageNumber) || 1);
   const [pageSize, setPageSize] = useState(Number.parseInt(itemsPerPage) || 5);
   const [filter, setFilter] = useState(filtersString);
-  const [errorObject, setErrorObject] = useState({
+  const [notificationObject, setNotificationObject] = useState({
     isError: false,
     message: "",
-    reload: false,
   });
   const [data, setData] = useState([]);
   const searchElement = useRef(null);
@@ -27,8 +24,8 @@ function BooksListing() {
     setData(data);
   };
 
-  const setError = function (errorObject) {
-    setErrorObject(errorObject);
+  const setNotification = function (NotificationObject) {
+    setNotificationObject(NotificationObject);
   };
 
   const navigateToPage = function (value) {
@@ -48,9 +45,10 @@ function BooksListing() {
     setPageSize(Number.parseInt(value));
     if (count > 250) {
       history.push(`/page/1/items/${value}`);
-      setErrorObject({
+      setNotificationObject({
         isError: true,
-        message: "Because the total records are more than expeted, your page number is reset to 1.",
+        message:
+          "Because the total records are more than expeted, your page number is reset to 1.",
       });
     } else {
       history.push(`/page/${pageNo}/items/${value}`);
@@ -66,7 +64,7 @@ function BooksListing() {
         setFilter(value);
         history.push(`/page/1/items/${pageSize}/filters/${value}`);
       } else {
-        setErrorObject({
+        setNotificationObject({
           isError: true,
           message: "The search field is empty. Please enter a query to search.",
         });
@@ -81,7 +79,7 @@ function BooksListing() {
       setFilter(value);
       history.push(`/page/1/items/${pageSize}/filters/${value}`);
     } else {
-      setErrorObject({
+      setNotificationObject({
         isError: true,
         message: "The search field is empty. Please enter a query to search.",
       });
@@ -96,9 +94,10 @@ function BooksListing() {
       if (value) {
         navigateToPage(value);
       } else {
-        setErrorObject({
+        setNotificationObject({
           isError: true,
-          message: "The page number field is empty. Please enter a page number.",
+          message:
+            "The page number field is empty. Please enter a page number.",
         });
       }
     }
@@ -110,7 +109,7 @@ function BooksListing() {
     if (value) {
       navigateToPage(value);
     } else {
-      setErrorObject({
+      setNotificationObject({
         isError: true,
         message: "The page number field is empty. Please enter a page number.",
       });
@@ -118,11 +117,11 @@ function BooksListing() {
   };
 
   const handleClose = () => {
-    setErrorObject({
+    setNotificationObject({
       isError: false,
       message: "",
     });
-  }
+  };
 
   return (
     <>
@@ -133,30 +132,23 @@ function BooksListing() {
       />
       <PageSizeSelector
         data={data}
+        handleDataChange={updateDataChange}
         handlePageSizeChange={updatePageSizeChange}
         pageSize={pageSize}
       />
-      {
-        errorObject.isError && <ErrorHandler handleClose={handleClose} errorObject={errorObject} /> 
-      }
+      {notificationObject.isError && (
+        <NotificationHandler handleClose={handleClose} notificationObject={notificationObject} />
+      )}
       <ListingTableContainer
         data={data}
         handleDataChange={updateDataChange}
-        handleError={setError}
+        handleNotification={setNotification}
         pageNo={pageNo}
         pageSize={pageSize}
         filter={filter}
-      />
-      <Pagination
-        data={data}
-        handlePagination={updatePageNumber}
-        pageNo={pageNo}
-        pageSize={pageSize}
-      />
-      <PageNavigation
-        onKeyPressEvent={handlePageNavigationByKeyPress}
-        onClickEvent={handlePageNavigationByClick}
-        refElement={PageNavigationElement}
+        updatePageNumber={updatePageNumber}
+        handlePageNavigationByKeyPress={handlePageNavigationByKeyPress}
+        handlePageNavigationByClick={handlePageNavigationByClick}
       />
     </>
   );

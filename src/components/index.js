@@ -8,7 +8,8 @@ import ListingTableContainer from "./listing-table-container/listing-table-conta
 import ListingTable from "./listing-table/listing-table.jsx";
 import ListingTableHeader from "./listing-table-header/listing-table-header.jsx";
 import SearchBar from "./search-bar/search-bar.jsx";
-import ErrorHandler from "./error-handler/error-handler.jsx"
+import NotificationHandler from "./notification-handler/notification-handler.jsx";
+
 export {
   Header,
   Footer,
@@ -20,5 +21,5 @@ export {
   SearchBar,
   ListingTableHeader,
   Loader,
-  ErrorHandler
+  NotificationHandler,
 };
