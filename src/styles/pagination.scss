@@ -1,0 +1,8 @@
+.pagination-container {
+    .pagination-buttons {
+        button {
+            @extend .mx-2; 
+        }
+    }
+    // additional styles goes here
+}
