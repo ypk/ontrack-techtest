@@ -73,8 +73,8 @@ const ListingTableContainer = (props) => {
       return (
         <>
           <Row className="listing-table-container mt-4 mb-5">
-            <Col>
-              <Table responsive>
+            <Col lg={10} className="mx-auto">
+              <Table striped hover bordered responsive>
                 <ListingTableHeader />
                 <ListingTable data={data} />
               </Table>
@@ -106,7 +106,7 @@ const ListingTableContainer = (props) => {
             notificationObject={notificationObject}
           />
           <Row className="reset-restults-container">
-            <Col lg={2}>
+            <Col className="my-3 mx-auto" lg={2}>
               <IndexLinkContainer to="/page/1">
                 <Button variant="outline-primary" block>
                   Reset

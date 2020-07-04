@@ -12,10 +12,10 @@ function PageSizeSelector(props) {
 
   return (
     <Row className="page-size-selector-container mt-5">
-      <Col>
+      <Col lg={10} className="my-2 mx-auto">
         <Form.Group as={Row} className="justify-content-end" controlId="itemsPerPageSelect">
-          <Form.Label sm={3} lg={1} column>Items per page</Form.Label>
-          <Col sm={3}>
+          <Form.Label sm={3} lg={2} column className="text-right">Items per page</Form.Label>
+          <Col sm={3} lg={2}>
             <Form.Control
               onChange={(e) => updatePageSize(e, totalRecords)}
               as="select"

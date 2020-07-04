@@ -1,0 +1,8 @@
+th {
+    &[variant="primary"]{
+        color: $white;
+        background-color: theme-color("primary");
+        font-weight: normal;
+    }
+    // additional styles goes here
+}

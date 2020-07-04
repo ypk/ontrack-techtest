@@ -11,7 +11,7 @@ function NotificationHandler(props) {
   return (
     <>
       <Row className="notification-container">
-        <Col>
+        <Col className="my-3 mx-auto" lg={10}>
           <Alert variant={variant} onClose={handleClose} dismissible>
             {message}
           </Alert>

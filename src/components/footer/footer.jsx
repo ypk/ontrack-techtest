@@ -7,7 +7,7 @@ function Footer() {
       <Row>
         <Col>
           <p className="text-center">
-            <small>rendered on {renderedTime}</small>
+            <small>Page rendered on {renderedTime}</small>
           </p>
         </Col>
       </Row>

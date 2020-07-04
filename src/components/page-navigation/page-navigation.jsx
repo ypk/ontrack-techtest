@@ -18,7 +18,7 @@ const PageNavigation = (props) => {
 
   return (
     <Row className="page-navigation-container my-3">
-      <Col>
+      <Col lg={5} className="mx-auto">
         <Form.Group as={Row} className="justify-content-center" controlId="searchField">
           <Form.Label sm={1} className="align-self-center mb-0">Navigate to page</Form.Label>
           <Col sm={4} md={3}>
@@ -33,7 +33,7 @@ const PageNavigation = (props) => {
               />
               <InputGroup.Append>
                 <Button
-                  variant="outline-primary"
+                  variant="primary"
                   onClick={onClickEvent}
                 >
                   Go

@@ -15,7 +15,7 @@ const ListingTableHeader = () => {
     <thead>
       <tr>
         {ListingHeadings.map((header, index) => (
-          <th key={index} className="align-middle text-center">
+          <th key={index} variant="primary" className="align-middle text-center">
             {header}
           </th>
         ))}

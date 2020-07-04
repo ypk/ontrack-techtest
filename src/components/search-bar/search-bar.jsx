@@ -11,7 +11,7 @@ const SearchBar = (props) => {
           className="justify-content-center mb-0"
           controlId="searchField"
         >
-          <Col sm={12}>
+          <Col sm={12} className="my-3 mx-auto" lg={10}>
             <InputGroup>
               <Form.Control
                 placeholder="e.g: name of a book or an author"
@@ -20,7 +20,7 @@ const SearchBar = (props) => {
                 onKeyPress={onKeyPressEvent}
               />
               <InputGroup.Append>
-                <Button variant="outline-primary" onClick={onClickEvent}>
+                <Button variant="primary" onClick={onClickEvent}>
                   Search
                 </Button>
               </InputGroup.Append>
