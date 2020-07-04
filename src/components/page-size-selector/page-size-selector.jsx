@@ -11,7 +11,7 @@ function PageSizeSelector(props) {
   };
 
   return (
-    <Row className="page-size-selector mt-5">
+    <Row className="page-size-selector-container mt-5">
       <Col>
         <Form.Group as={Row} className="justify-content-end" controlId="itemsPerPageSelect">
           <Form.Label sm={3} lg={1} column>Items per page</Form.Label>

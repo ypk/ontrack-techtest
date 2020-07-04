@@ -17,7 +17,7 @@ const PageNavigation = (props) => {
   } = props;
 
   return (
-    <Row className="pagination-container my-3">
+    <Row className="page-navigation-container my-3">
       <Col>
         <Form.Group as={Row} className="justify-content-center" controlId="searchField">
           <Form.Label sm={1} className="align-self-center mb-0">Navigate to page</Form.Label>

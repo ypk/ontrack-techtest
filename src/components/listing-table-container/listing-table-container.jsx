@@ -1,4 +1,12 @@
-import { React, Row, Col, Table, useEffect, IndexLinkContainer, Button } from "../../common";
+import {
+  React,
+  Row,
+  Col,
+  Table,
+  useEffect,
+  IndexLinkContainer,
+  Button,
+} from "../../common";
 import {
   ListingTable,
   ListingTableHeader,
@@ -42,7 +50,11 @@ const ListingTableContainer = (props) => {
           handleDataChange(data);
         });
       } catch (e) {
-        handleNotification({ isError: true, message: e.message, reload: false });
+        handleNotification({
+          isError: true,
+          message: e.message,
+          reload: false,
+        });
       }
     };
     fetchData();
@@ -50,7 +62,7 @@ const ListingTableContainer = (props) => {
 
   if (books === undefined) {
     return (
-      <Row>
+      <Row className="listing-table-loader-container">
         <Col className="justify-content-center">
           <Loader />
         </Col>
@@ -60,7 +72,7 @@ const ListingTableContainer = (props) => {
     if (books.length !== 0) {
       return (
         <>
-          <Row className="listing-container mt-4 mb-5">
+          <Row className="listing-table-container mt-4 mb-5">
             <Col>
               <Table responsive>
                 <ListingTableHeader />
@@ -89,11 +101,16 @@ const ListingTableContainer = (props) => {
       };
       return (
         <>
-          <NotificationHandler handleClose={handleClose} notificationObject={notificationObject} />
-          <Row>
+          <NotificationHandler
+            handleClose={handleClose}
+            notificationObject={notificationObject}
+          />
+          <Row className="reset-restults-container">
             <Col lg={2}>
               <IndexLinkContainer to="/page/1">
-                <Button variant="outline-primary" block>Reset</Button>
+                <Button variant="outline-primary" block>
+                  Reset
+                </Button>
               </IndexLinkContainer>
             </Col>
           </Row>

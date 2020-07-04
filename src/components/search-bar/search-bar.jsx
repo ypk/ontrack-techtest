@@ -4,7 +4,7 @@ const SearchBar = (props) => {
   const { onKeyPressEvent, onClickEvent, refElement } = props;
 
   return (
-    <Row className="pagination-container mt-5 mb-2">
+    <Row className="search-bar-container mt-5 mb-2">
       <Col>
         <Form.Group
           as={Row}
