@@ -13,7 +13,6 @@ import {
   Loader,
   Pagination,
   PageNavigation,
-  NotificationHandler,
 } from "../../components";
 import { RequestHandler } from "../../services";
 

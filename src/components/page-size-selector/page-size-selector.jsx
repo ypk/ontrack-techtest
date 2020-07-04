@@ -2,10 +2,11 @@ import { React, Row, Col, Form } from "../../common";
 
 function PageSizeSelector(props) {
   const allowedItemsCount = [1, 5, 10, 15, 20];
-  const { pageSize, data, handleDataChange, handlePageSizeChange } = props;
+  const { pageSize, data, handleDataChange, handlePageSizeChange, updateNotifier } = props;
   const { count: totalRecords } = data;
 
   const updatePageSize = (e, totalRecords) => {
+    updateNotifier();
     handlePageSizeChange(e, totalRecords)
     handleDataChange([]);
   };

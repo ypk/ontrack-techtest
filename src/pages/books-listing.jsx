@@ -15,7 +15,7 @@ function BooksListing() {
   const [notificationObject, setNotificationObject] = useState({
     isError: false,
     message: "",
-    dismissible: true
+    dismissible: true,
   });
   const [data, setData] = useState([]);
   const searchElement = useRef(null);
@@ -56,7 +56,18 @@ function BooksListing() {
     }
   };
 
-  /* Filter Events */
+  /* Set search filter string in search bar */
+
+  if (
+    filter !== undefined &&
+    filter !== "" &&
+    searchElement !== null &&
+    searchElement.current !== null
+  ) {
+    searchElement.current.value = filter;
+  }
+
+  /* Search Bar */
 
   const handleSearchOnKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -87,7 +98,7 @@ function BooksListing() {
     }
   };
 
-  /* Page Navigation By Form Events */
+  /* Page Navigation */
 
   const handlePageNavigationByKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -135,10 +146,14 @@ function BooksListing() {
         data={data}
         handleDataChange={updateDataChange}
         handlePageSizeChange={updatePageSizeChange}
+        updateNotifier={handleClose}
         pageSize={pageSize}
       />
       {notificationObject.isError && (
-        <NotificationHandler handleClose={handleClose} notificationObject={notificationObject} />
+        <NotificationHandler
+          handleClose={handleClose}
+          notificationObject={notificationObject}
+        />
       )}
       <ListingTableContainer
         data={data}
