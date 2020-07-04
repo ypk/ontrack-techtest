@@ -15,6 +15,7 @@ function BooksListing() {
   const [notificationObject, setNotificationObject] = useState({
     isError: false,
     message: "",
+    dismissible: true
   });
   const [data, setData] = useState([]);
   const searchElement = useRef(null);

@@ -35,12 +35,6 @@ const ListingTableContainer = (props) => {
     updatePageNumber(e);
     handleDataChange([]);
   };
-  const handleClose = () => {
-    handleNotification({
-      isError: false,
-      message: "",
-    });
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,66 +52,60 @@ const ListingTableContainer = (props) => {
       }
     };
     fetchData();
-  }, [pageNo, pageSize, filter]);
 
-  if (books === undefined) {
-    return (
-      <Row className="listing-table-loader-container">
-        <Col className="justify-content-center">
-          <Loader />
-        </Col>
-      </Row>
-    );
-  } else {
-    if (books.length !== 0) {
-      return (
-        <>
-          <Row className="listing-table-container mt-4 mb-5">
-            <Col lg={10} className="mx-auto">
-              <Table striped hover bordered responsive>
-                <ListingTableHeader />
-                <ListingTable data={data} />
-              </Table>
-            </Col>
-          </Row>
-          <Pagination
-            data={data}
-            handlePagination={updatePagination}
-            pageNo={pageNo}
-            pageSize={pageSize}
-          />
-          <PageNavigation
-            onKeyPressEvent={handlePageNavigationByKeyPress}
-            onClickEvent={handlePageNavigationByClick}
-            refElement={PageNavigationElement}
-          />
-        </>
-      );
-    } else {
+    if (books && books.length === 0) {
       const notificationObject = {
         isError: true,
         message:
           "The request yielded 0 results. Please change your search parameters and try again.",
+        dismissible: false,
+        callback: () => {
+          return (
+            <Row className="reset-restults-container">
+              <Col className="my-3 mx-auto" lg={2}>
+                <IndexLinkContainer to="/page/1">
+                  <Button variant="outline-primary" block>
+                    Reset Search
+                  </Button>
+                </IndexLinkContainer>
+              </Col>
+            </Row>
+          );
+        },
       };
-      return (
-        <>
-          <NotificationHandler
-            handleClose={handleClose}
-            notificationObject={notificationObject}
-          />
-          <Row className="reset-restults-container">
-            <Col className="my-3 mx-auto" lg={2}>
-              <IndexLinkContainer to="/page/1">
-                <Button variant="outline-primary" block>
-                  Reset
-                </Button>
-              </IndexLinkContainer>
-            </Col>
-          </Row>
-        </>
-      );
+      handleNotification(notificationObject);
     }
-  }
+  }, [pageNo, pageSize, filter, books]);
+
+  return books === undefined ? (
+    <Row className="listing-table-loader-container">
+      <Col className="justify-content-center">
+        <Loader />
+      </Col>
+    </Row>
+  ) : books.length !== 0 ? (
+    <>
+      <Row className="listing-table-container mt-4 mb-5">
+        <Col lg={10} className="mx-auto">
+          <Table striped hover bordered responsive>
+            <ListingTableHeader />
+            <ListingTable data={data} />
+          </Table>
+        </Col>
+      </Row>
+      <Pagination
+        data={data}
+        handlePagination={updatePagination}
+        pageNo={pageNo}
+        pageSize={pageSize}
+      />
+      <PageNavigation
+        onKeyPressEvent={handlePageNavigationByKeyPress}
+        onClickEvent={handlePageNavigationByClick}
+        refElement={PageNavigationElement}
+      />
+    </>
+  ) : null;
 };
 
 export default ListingTableContainer;
